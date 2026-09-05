@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       leg:
-        description: "baseline (uninstrumented) or instrumented (under chalk/curiosity)"
+        description: baseline (uninstrumented) or instrumented (under chalk/curiosity)
         type: choice
         options: [instrumented, baseline]
         default: instrumented
       profile:
-        description: "CrashOverride chalk profile"
+        description: CrashOverride chalk profile
         type: string
         default: curiosity-tests-racecar
       racecar_run:
@@ -64,7 +64,7 @@ jobs:
 
   build:
     needs: changes
-    if: ${{ needs.changes.outputs.src == 'true' }}
+    if: ${{ (github.event_name == 'workflow_dispatch' || needs.changes.outputs.src == 'true') }}
 
     name: Lint, Test, Build & Pack on Node ${{ matrix.node }}
 
